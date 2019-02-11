@@ -43,7 +43,7 @@
 	Angle X;
 	Angle Y;
 	Angle Z;
-	
+	uint16_t PWM_Story=100;
 	void Angle_Get(void *parameter)
 	{
 		uint8_t i;
@@ -146,48 +146,59 @@
 		 while (1)
 	{   
 			
-
-		
+			for(i=0;i<30;i++)
+		{
 				Dis_Para[i]=uart3_getchar();//在里面已经包含有调度函数，当没有数据输入时会停留在这一步，时间到后调度到其他任务
-			
-				i++;
-		
-					if(Dis_Para[i-1]==0xff|i>30|Dis_Para[0]!=0xEE)
-					{
-						b=i-1;
-						i=0;
-						
-					}
-				
-					if(Dis_Para[0]==0xee&&Dis_Para[5]==0xC5)//判断是否接收已经结束
-					{
-									
-									motor1.state=1;
-									motor1.pwm=100;
-									motor2.pwm=200;
-
-					}
+				if(Dis_Para[0]!=0xee)
+				{
 					
-					if(Dis_Para[0]==0xee&&Dis_Para[5]==0xC6)//判断是否接收已经结束
-					{
-									
-									motor1.state=1;
-									motor2.pwm=100;
-									motor1.pwm=200;
+						break;
+				}
+			
+				
+		
+//					if(Dis_Para[i-1]==0xff|i>30|Dis_Para[0]!=0xEE)
+//					{
+//						b=i-1;
+//						i=0;
+//						
+//					}
+				if(i==12)
+				{
+							if(Dis_Para[0]==0xee&&Dis_Para[5]==0xC6)//判断是否接收已经结束
+							{
+											
+										
+											PWM_Story+=10;
+											if(PWM_Story>=400)
+											{
+												
+												
+												PWM_Story=400;
+											}
+											
 
-					}
-						if(Dis_Para[0]==0xee&&Dis_Para[5]==0xF1)//判断是否接收已经结束
-					{
-									
-									motor1.state_record=1;
+							}
+					
+							if(Dis_Para[0]==0xee&&Dis_Para[5]==0xC5)//判断是否接收已经结束
+							{
+											
+											
+											PWM_Story-=10;
+											
+											
+											if(PWM_Story<=10)
+											{
+												
+												
+												PWM_Story=10;
+											}
+										
 
-					}
-					if(Dis_Para[0]==0xee&&Dis_Para[5]==0xc1)//判断是否接收已经结束
-					{
-									
-									motor1.state_record=0;
-
-					}
+							}
+						break;	
+				}
+			}			
 	}
 }
 /*******任务初始化********/
