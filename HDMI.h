@@ -19,8 +19,6 @@ void Value_Asii(uint8_t uart_value,float value);
 void SetProgressValue(rt_uint16_t screen_id,rt_uint16_t control_id,char *str1,uint8_t uart_value);
 void SetProgress_mess_value(rt_uint16_t screen_id,rt_uint16_t control_id,char *str,float value,uint8_t uart_value);
 void BEGIN_CMD(uint8_t uart_value);
-void SetProgress_mess_value_f(rt_uint16_t screen_id,rt_uint16_t control_id,char *str1,float value,uint8_t uart_value);
 void Send_Icon(rt_uint16_t screen_id,rt_uint16_t control_id,rt_uint8_t zhen_id,uint8_t uart_value);
-void SetProgress_mess_value_Int(rt_uint16_t screen_id,rt_uint16_t control_id,char *str1,float value,uint8_t uart_value);
-void Value_Asii_Int(uint8_t uart_value,float value);
+
 #endif
