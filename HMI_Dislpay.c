@@ -69,14 +69,21 @@ void send_string(uint8_t uart_value,char *str2)
 }
 
 /********************选择串口发送2个字节****************/
-void TX_16(uint8_t uart_value,uint8_t P1)
+void TX_16(uint8_t uart_value,uint16_t P1)
 {
 	
 	TX_8(uart_value,(P1)>>8);
 	TX_8(uart_value,P1);
 	
 }
-
+void TX_32(uint8_t uart_value,uint32_t P1)
+{
+	
+	TX_16(uart_value,(P1)>>16);
+	TX_16(uart_value,(P1)&0xFFFF);
+	
+	
+}
 
 /********正数精度为0.01*************/
 void HDMI0_2(uint8_t uart_value,char *str1,float num)
@@ -230,6 +237,18 @@ void Send_Icon(rt_uint16_t screen_id,rt_uint16_t control_id,rt_uint8_t zhen_id,u
 	TX_16(uart_value,screen_id);
 	TX_16(uart_value,control_id);
 	TX_8(uart_value,zhen_id);
+	END_CMD(uart_value);
+	
+}
+/*************屏幕中显示图标*******/
+void Send_Angle(rt_uint16_t screen_id,rt_uint16_t control_id,uint32_t value,uint8_t uart_value)
+{
+	BEGIN_CMD(uart_value);//EE
+	TX_8(uart_value,0xB1);
+	TX_8(uart_value,0x10);
+	TX_16(uart_value,screen_id);
+	TX_16(uart_value,control_id);
+	TX_32(uart_value,value);
 	END_CMD(uart_value);
 	
 }
