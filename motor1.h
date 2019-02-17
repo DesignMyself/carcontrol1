@@ -67,11 +67,11 @@ typedef struct
 	uint8_t autorun_state;
 	uint8_t sign;//恢复当前状态
 	uint16_t Target_Speed;
-	int32_t sumotor_abs;//绝对路程
+	float Target_Angle;//目标角度
   uint32_t summotor_ahead;  
-	uint32_t summotor_back; 
-	uint32_t summotor;
-	uint8_t repeat_run;
+	int32_t sumotor_abs; 
+	int32_t summotor;
+	float Angle;
 	uint8_t open;//开启引脚
 	uint8_t brake;//刹车引脚
 	uint8_t ccw;//转变引脚
@@ -83,6 +83,13 @@ typedef struct
 	uint16_t prode_direction;
 }motor;
 
+typedef struct{
+		
+		uint8_t i;//用来记录获得了多少个数据
+		uint8_t data[20];//记录数据缓存区
+		
+	}Usart_get;
+	
 typedef	union{
 		float f;
 		uint8_t  x[4];
